@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# 实验输出 (每次运行重新生成)
+results/
+figures/
+logs/
+faiss_index/
+
+# 模型缓存
+*.pkl
+*.faiss
+*.npy
+*.bin
+*.safetensors
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db

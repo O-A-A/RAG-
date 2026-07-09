@@ -1,0 +1,4 @@
+﻿retriever,n_questions,recall_at_5,mrr,exact_match,f1,avg_retrieval_ms,avg_generation_ms
+bm25,100,0.9533,0.9428,0.0,0.0,0.18,0.0
+dense_bge,100,0.965,0.9583,0.0,0.0,9.09,0.0
+hybrid_rrf,100,0.96,0.9628,0.0,0.0,9.62,0.0

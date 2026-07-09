@@ -1,0 +1,198 @@
+23:18:32 [INFO] PyTorch 随机种子已设置: 42 (CPU)
+23:18:32 [INFO] =======================================================
+23:18:32 [INFO]   RAG 检索策略对比实验 — 开始运行
+23:18:32 [INFO]   时间: 2026-07-09 23:18:32
+23:18:32 [INFO]   模式: 仅检索 (--skip-llm)
+23:18:32 [INFO]   随机种子: 42
+23:18:32 [INFO] =======================================================
+23:18:32 [INFO] =======================================================
+23:18:32 [INFO] 阶段 1/5: 加载实验数据
+23:18:32 [INFO]   语料库: 30 篇文档
+23:18:32 [INFO]   测试集: 100 条 QA 对
+23:18:32 [INFO] CUDA 不可用，Embedding 将使用 CPU
+23:18:34 [INFO] Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+23:18:34 [INFO] NumExpr defaulting to 8 threads.
+23:18:37 [INFO] PyTorch version 2.5.1 available.
+23:18:38 [INFO] =======================================================
+23:18:38 [INFO] 阶段 2/5: 文本切分 & FAISS 索引构建
+23:18:38 [INFO] TextSplitter 初始化完成: chunk_size=512, chunk_overlap=50, separators=['\n\n', '\n', '。', '！']...
+23:18:38 [INFO] 开始文本切分: 30 篇文档, 共 10242 字符
+23:18:38 [INFO] 文本切分完成: 30 篇文档 → 30 个文本块, 平均块长度: 341 字符, 涉及 30 个原始文档
+23:18:38 [INFO]   切分完成: 30 篇 → 30 个块
+23:18:38 [INFO]   加载 BGE Embedding 模型...
+23:18:38 [INFO] 正在加载 Embedding 模型: BAAI/bge-small-zh-v1.5
+23:18:40 [INFO] Loading SentenceTransformer model from BAAI/bge-small-zh-v1.5.
+23:18:46 [INFO] Embedding 模型加载完成: BAAI/bge-small-zh-v1.5
+  设备: cpu
+  归一化: True
+  批次大小: 32
+23:18:46 [INFO]   构建 FAISS 索引...
+23:18:46 [INFO] FAISSVectorStore 初始化完成（索引尚未构建）
+23:18:46 [INFO] 开始构建 FAISS 索引: 30 个文档块
+23:18:47 [INFO] Loading faiss with AVX2 support.
+23:18:47 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+23:18:47 [INFO] Loading faiss.
+23:18:48 [INFO] Successfully loaded faiss.
+23:18:48 [INFO] FAISS 索引构建完成:
+  向量数量: 30
+  向量维度: 512
+  索引类型: IndexFlatIP (内积搜索)
+  搜索方式: 暴力搜索 (精确, O(N) 时间复杂度)
+23:18:48 [INFO]   FAISS 索引: 30 个向量
+23:18:49 [INFO] =======================================================
+23:18:49 [INFO] 阶段 3/5: 初始化三种 Retriever
+23:18:49 [INFO] BM25 分词中: 30 篇文档...
+23:18:49 [DEBUG] Building prefix dict from the default dictionary ...
+23:18:49 [DEBUG] Dumping model to file cache C:\Users\34490\AppData\Local\Temp\jieba.cache
+23:18:49 [DEBUG] Loading model cost 0.571 seconds.
+23:18:49 [DEBUG] Prefix dict has been built successfully.
+23:18:49 [INFO] BM25Retriever 初始化完成: n_docs=30, avg_doc_len=169.7 tokens, top_k=5
+23:18:49 [INFO]   [1/3] Retriever[bm25]
+23:18:49 [INFO] DenseRetriever 初始化完成: n_vectors=30, top_k=5
+23:18:49 [INFO]   [2/3] Retriever[dense_bge]
+23:18:49 [INFO] HybridRetriever 初始化完成:
+  BM25: Retriever[bm25]
+  Dense: Retriever[dense_bge]
+  α=0.5 (Dense), 1-α=0.5 (BM25)
+  top_k=5, candidate_multiplier=4
+23:18:49 [INFO]   [3/3] Retriever[hybrid_a50]
+23:18:49 [INFO] 阶段 4/5: 跳过 LLM (--skip-llm)
+23:18:49 [INFO] =======================================================
+23:18:49 [INFO] 阶段 5/5: 运行三组对比实验
+23:18:49 [INFO]   每组 100 个问题
+23:18:49 [INFO] 
+──────────────────────────────────────────────────
+23:18:49 [INFO]   运行实验组: bm25
+23:18:49 [INFO] ──────────────────────────────────────────────────
+23:18:49 [INFO]     [ 20/100] Recall@5=0.0000  MRR=0.0000
+23:18:49 [INFO]     [ 40/100] Recall@5=0.0000  MRR=0.0000
+23:18:49 [INFO]     [ 60/100] Recall@5=0.0000  MRR=0.0000
+23:18:49 [INFO]     [ 80/100] Recall@5=0.0000  MRR=0.0000
+23:18:49 [INFO]     [100/100] Recall@5=0.0000  MRR=0.0000
+23:18:49 [INFO] 
+──────────────────────────────────────────────────
+23:18:49 [INFO]   运行实验组: dense_bge
+23:18:49 [INFO] ──────────────────────────────────────────────────
+23:18:49 [INFO]     [ 20/100] Recall@5=0.0000  MRR=0.0000
+23:18:50 [INFO]     [ 40/100] Recall@5=0.0000  MRR=0.0000
+23:18:50 [INFO]     [ 60/100] Recall@5=0.0000  MRR=0.0000
+23:18:50 [INFO]     [ 80/100] Recall@5=0.0000  MRR=0.0000
+23:18:50 [INFO]     [100/100] Recall@5=0.0000  MRR=0.0000
+23:18:50 [INFO] 
+──────────────────────────────────────────────────
+23:18:50 [INFO]   运行实验组: hybrid_a50
+23:18:50 [INFO] ──────────────────────────────────────────────────
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=23, 交集=2
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=23, 交集=2
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO]     [ 20/100] Recall@5=0.0000  MRR=0.0000
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=22, 交集=3
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO]     [ 40/100] Recall@5=0.0000  MRR=0.0000
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:50 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=22, 交集=3
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO]     [ 60/100] Recall@5=0.0000  MRR=0.0000
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=22, 交集=3
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=22, 交集=3
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=22, 交集=3
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO]     [ 80/100] Recall@5=0.0000  MRR=0.0000
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=22, 交集=3
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=21, 交集=4
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=22, 交集=3
+23:18:51 [INFO] [Hybrid α=0.5] 融合完成: BM25=20, Dense=5, 并集=20, 交集=5
+23:18:51 [INFO]     [100/100] Recall@5=0.0000  MRR=0.0000
+23:18:51 [INFO] 
+=======================================================
+23:18:51 [INFO] 导出实验结果
+23:18:51 [INFO]   [OK] experiment_result.csv (300 行)
+23:18:51 [INFO]   [OK] summary.csv (3 行)
+23:18:51 [INFO] 
+实验完成! 总耗时: 18.8 秒 (0.3 分钟)
+23:18:51 [INFO] 结果目录: D:\课件\大三下\自然语言处理\rag\results

@@ -1,0 +1,32 @@
+23:15:24 [INFO] PyTorch 随机种子已设置: 42 (CPU)
+23:15:24 [INFO] =======================================================
+23:15:24 [INFO]   RAG 检索策略对比实验 — 开始运行
+23:15:24 [INFO]   时间: 2026-07-09 23:15:24
+23:15:24 [INFO]   模式: 仅检索 (--skip-llm)
+23:15:24 [INFO]   随机种子: 42
+23:15:24 [INFO] =======================================================
+23:15:24 [INFO] =======================================================
+23:15:24 [INFO] 阶段 1/5: 加载实验数据
+23:15:24 [INFO]   语料库: 30 篇文档
+23:15:24 [INFO]   测试集: 100 条 QA 对
+23:15:25 [INFO] Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+23:15:25 [INFO] NumExpr defaulting to 8 threads.
+23:15:28 [INFO] PyTorch version 2.5.1 available.
+23:15:30 [INFO] =======================================================
+23:15:30 [INFO] 阶段 2/5: 文本切分 & FAISS 索引构建
+23:15:30 [INFO] TextSplitter 初始化完成: chunk_size=512, chunk_overlap=50, separators=['\n\n', '\n', '。', '！']...
+23:15:30 [INFO] 开始文本切分: 30 篇文档, 共 10242 字符
+23:15:30 [INFO] 文本切分完成: 30 篇文档 → 30 个文本块, 平均块长度: 341 字符, 涉及 30 个原始文档
+23:15:30 [INFO]   切分完成: 30 篇 → 30 个块
+23:15:30 [INFO]   加载 BGE Embedding 模型...
+23:15:30 [INFO] 正在加载 Embedding 模型: BAAI/bge-small-zh-v1.5
+23:15:35 [WARNING] '(ProtocolError('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)), '(Request ID: ec61b414-060a-48ea-b9c7-70c2b9958536)')' thrown while requesting HEAD https://huggingface.co/BAAI/bge-small-zh-v1.5/resolve/main/./modules.json
+23:15:35 [WARNING] Retrying in 1s [Retry 1/5].
+23:15:41 [WARNING] '(ProtocolError('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)), '(Request ID: f3c7d235-7874-404f-bb2f-b0aa62591463)')' thrown while requesting HEAD https://huggingface.co/BAAI/bge-small-zh-v1.5/resolve/main/./modules.json
+23:15:41 [WARNING] Retrying in 2s [Retry 2/5].
+23:15:48 [WARNING] '(ProtocolError('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)), '(Request ID: b665c44c-d451-4adc-9875-f28bd542b687)')' thrown while requesting HEAD https://huggingface.co/BAAI/bge-small-zh-v1.5/resolve/main/./modules.json
+23:15:48 [WARNING] Retrying in 4s [Retry 3/5].
+23:15:57 [WARNING] '(ProtocolError('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)), '(Request ID: 0e9b5ed3-2560-43f3-bfdf-69e43a9b5c50)')' thrown while requesting HEAD https://huggingface.co/BAAI/bge-small-zh-v1.5/resolve/main/./modules.json
+23:15:57 [WARNING] Retrying in 8s [Retry 4/5].
+23:16:07 [INFO] Loading SentenceTransformer model from BAAI/bge-small-zh-v1.5.
+23:16:11 [WARNING] Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`

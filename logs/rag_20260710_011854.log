@@ -1,0 +1,78 @@
+2026-07-10 01:18:54 [INFO] __main__: 配置: chunk_size=512, top_k=5
+2026-07-10 01:18:54 [INFO] __main__: Embedding: BAAI/bge-small-zh-v1.5
+2026-07-10 01:18:54 [INFO] __main__: LLM: Qwen/Qwen2.5-7B-Instruct
+2026-07-10 01:18:56 [INFO] numexpr.utils: Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-07-10 01:18:56 [INFO] numexpr.utils: NumExpr defaulting to 8 threads.
+2026-07-10 01:18:59 [INFO] datasets: PyTorch version 2.5.1 available.
+2026-07-10 01:19:01 [INFO] __main__: ==================================================
+2026-07-10 01:19:01 [INFO] __main__: 阶段 1/5: 加载文档
+2026-07-10 01:19:01 [INFO] __main__: ==================================================
+2026-07-10 01:19:01 [INFO] __main__: 语料文件不存在，使用内置示例数据 (sample_data)
+2026-07-10 01:19:01 [INFO] __main__: 
+==================================================
+2026-07-10 01:19:01 [INFO] __main__: 阶段 2/5: 文本切分
+2026-07-10 01:19:01 [INFO] __main__: ==================================================
+2026-07-10 01:19:01 [INFO] rag_project.data.splitter: TextSplitter 初始化完成: chunk_size=512, chunk_overlap=50, separators=['\n\n', '\n', '。', '！']...
+2026-07-10 01:19:01 [INFO] rag_project.data.splitter: 开始文本切分: 30 篇文档, 共 6765 字符
+2026-07-10 01:19:01 [INFO] rag_project.data.splitter: 文本切分完成: 30 篇文档 → 30 个文本块, 平均块长度: 226 字符, 涉及 30 个原始文档
+2026-07-10 01:19:01 [INFO] __main__: 切分统计: 总块数=30, 平均长度=226 字符, 最短=214, 最长=248
+2026-07-10 01:19:01 [INFO] __main__: 
+==================================================
+2026-07-10 01:19:01 [INFO] __main__: 阶段 3/5: 构建 Embedding & FAISS 索引
+2026-07-10 01:19:01 [INFO] __main__: ==================================================
+2026-07-10 01:19:01 [INFO] rag_project.embeddings.encoder: 正在加载 Embedding 模型: BAAI/bge-small-zh-v1.5
+2026-07-10 01:19:11 [WARNING] huggingface_hub.utils._http: '(ReadTimeoutError("HTTPSConnectionPool(host='huggingface.co', port=443): Read timed out. (read timeout=10)"), '(Request ID: 0c655bec-9437-473b-81a0-c4684847e2f2)')' thrown while requesting HEAD https://huggingface.co/BAAI/bge-small-zh-v1.5/resolve/main/./modules.json
+2026-07-10 01:19:11 [WARNING] huggingface_hub.utils._http: Retrying in 1s [Retry 1/5].
+2026-07-10 01:19:22 [WARNING] huggingface_hub.utils._http: '(ReadTimeoutError("HTTPSConnectionPool(host='huggingface.co', port=443): Read timed out. (read timeout=10)"), '(Request ID: 788ae2ee-cce0-4cf1-95f8-8f4b2f68dfe2)')' thrown while requesting HEAD https://huggingface.co/BAAI/bge-small-zh-v1.5/resolve/main/./modules.json
+2026-07-10 01:19:22 [WARNING] huggingface_hub.utils._http: Retrying in 2s [Retry 2/5].
+2026-07-10 01:19:35 [WARNING] huggingface_hub.utils._http: '(ReadTimeoutError("HTTPSConnectionPool(host='huggingface.co', port=443): Read timed out. (read timeout=10)"), '(Request ID: 0384156c-fba7-40d6-9686-2952d298469d)')' thrown while requesting HEAD https://huggingface.co/BAAI/bge-small-zh-v1.5/resolve/main/./modules.json
+2026-07-10 01:19:35 [WARNING] huggingface_hub.utils._http: Retrying in 4s [Retry 3/5].
+2026-07-10 01:19:49 [WARNING] huggingface_hub.utils._http: '(ReadTimeoutError("HTTPSConnectionPool(host='huggingface.co', port=443): Read timed out. (read timeout=10)"), '(Request ID: 644f96c8-6e31-4772-84f4-87c1c086f155)')' thrown while requesting HEAD https://huggingface.co/BAAI/bge-small-zh-v1.5/resolve/main/./modules.json
+2026-07-10 01:19:49 [WARNING] huggingface_hub.utils._http: Retrying in 8s [Retry 4/5].
+2026-07-10 01:20:00 [WARNING] huggingface_hub.utils._http: '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /BAAI/bge-small-zh-v1.5/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)')))"), '(Request ID: e12386cb-2440-4f2f-a054-c81a128f44c2)')' thrown while requesting HEAD https://huggingface.co/BAAI/bge-small-zh-v1.5/resolve/main/./modules.json
+2026-07-10 01:20:00 [WARNING] huggingface_hub.utils._http: Retrying in 8s [Retry 5/5].
+2026-07-10 01:20:19 [WARNING] huggingface_hub.utils._http: '(ReadTimeoutError("HTTPSConnectionPool(host='huggingface.co', port=443): Read timed out. (read timeout=10)"), '(Request ID: 47e1d998-4915-468a-aae3-6ff9572d37d9)')' thrown while requesting HEAD https://huggingface.co/BAAI/bge-small-zh-v1.5/resolve/main/./modules.json
+2026-07-10 01:20:31 [WARNING] huggingface_hub.utils._http: '(ReadTimeoutError("HTTPSConnectionPool(host='huggingface.co', port=443): Read timed out. (read timeout=10)"), '(Request ID: a9e3049b-3838-4151-b858-53640f06d7d4)')' thrown while requesting HEAD https://huggingface.co/BAAI/bge-small-zh-v1.5/resolve/main/./config_sentence_transformers.json
+2026-07-10 01:20:31 [WARNING] huggingface_hub.utils._http: Retrying in 1s [Retry 1/5].
+2026-07-10 01:20:40 [INFO] sentence_transformers.base.model: Loading SentenceTransformer model from BAAI/bge-small-zh-v1.5.
+2026-07-10 01:20:48 [ERROR] __main__: RAG 系统构建失败: Torch not compiled with CUDA enabled
+2026-07-10 01:20:48 [ERROR] __main__: 详细错误信息:
+Traceback (most recent call last):
+  File "D:\课件\大三下\自然语言处理\rag\rag_project\scripts\run_rag.py", line 443, in main
+    pipeline, chunks = build_rag_system(retriever_type=args.retriever)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\课件\大三下\自然语言处理\rag\rag_project\scripts\run_rag.py", line 236, in build_rag_system
+    encoder = EmbeddingEncoder()
+              ^^^^^^^^^^^^^^^^^^
+  File "D:\课件\大三下\自然语言处理\rag\rag_project\embeddings\encoder.py", line 110, in __init__
+    self.embedding_model = HuggingFaceEmbeddings(
+                           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\Lib\site-packages\langchain_huggingface\embeddings\huggingface.py", line 97, in __init__
+    self._client = model_cls(
+                   ^^^^^^^^^^
+  File "D:\anaconda\Lib\site-packages\sentence_transformers\util\decorators.py", line 41, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\Lib\site-packages\sentence_transformers\sentence_transformer\model.py", line 188, in __init__
+    super().__init__(
+  File "D:\anaconda\Lib\site-packages\sentence_transformers\base\model.py", line 255, in __init__
+    self.to(device)
+  File "D:\anaconda\Lib\site-packages\torch\nn\modules\module.py", line 1340, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\Lib\site-packages\torch\nn\modules\module.py", line 900, in _apply
+    module._apply(fn)
+  File "D:\anaconda\Lib\site-packages\torch\nn\modules\module.py", line 900, in _apply
+    module._apply(fn)
+  File "D:\anaconda\Lib\site-packages\torch\nn\modules\module.py", line 900, in _apply
+    module._apply(fn)
+  [Previous line repeated 1 more time]
+  File "D:\anaconda\Lib\site-packages\torch\nn\modules\module.py", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "D:\anaconda\Lib\site-packages\torch\nn\modules\module.py", line 1326, in convert
+    return t.to(
+           ^^^^^
+  File "D:\anaconda\Lib\site-packages\torch\cuda\__init__.py", line 310, in _lazy_init
+    raise AssertionError("Torch not compiled with CUDA enabled")
+AssertionError: Torch not compiled with CUDA enabled

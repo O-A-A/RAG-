@@ -1,0 +1,26 @@
+2026-07-10 01:17:21 [INFO] __main__: 配置: chunk_size=512, top_k=5
+2026-07-10 01:17:21 [INFO] __main__: Embedding: BAAI/bge-small-zh-v1.5
+2026-07-10 01:17:21 [INFO] __main__: LLM: Qwen/Qwen2.5-7B-Instruct
+2026-07-10 01:17:22 [INFO] numexpr.utils: Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-07-10 01:17:22 [INFO] numexpr.utils: NumExpr defaulting to 8 threads.
+2026-07-10 01:17:25 [INFO] datasets: PyTorch version 2.5.1 available.
+2026-07-10 01:17:27 [INFO] __main__: ==================================================
+2026-07-10 01:17:27 [INFO] __main__: 阶段 1/5: 加载文档
+2026-07-10 01:17:27 [INFO] __main__: ==================================================
+2026-07-10 01:17:27 [ERROR] __main__: RAG 系统构建失败: 语料文件不存在: D:\课件\大三下\自然语言处理\rag\data\corpus.jsonl
+请将 JSONL 格式的语料放入 ./data 目录，或在 config 中修改 corpus_file 配置。
+2026-07-10 01:17:27 [ERROR] __main__: 详细错误信息:
+Traceback (most recent call last):
+  File "D:\课件\大三下\自然语言处理\rag\rag_project\scripts\run_rag.py", line 428, in main
+    pipeline, chunks = build_rag_system(retriever_type=args.retriever)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\课件\大三下\自然语言处理\rag\rag_project\scripts\run_rag.py", line 188, in build_rag_system
+    documents = loader.load_documents()
+                ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\课件\大三下\自然语言处理\rag\rag_project\data\loader.py", line 303, in load_documents
+    return self.load_from_jsonl(source)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\课件\大三下\自然语言处理\rag\rag_project\data\loader.py", line 107, in load_from_jsonl
+    raise FileNotFoundError(
+FileNotFoundError: 语料文件不存在: D:\课件\大三下\自然语言处理\rag\data\corpus.jsonl
+请将 JSONL 格式的语料放入 ./data 目录，或在 config 中修改 corpus_file 配置。

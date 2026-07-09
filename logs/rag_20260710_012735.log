@@ -1,0 +1,60 @@
+2026-07-10 01:27:35 [INFO] __main__: 配置: chunk_size=512, top_k=5
+2026-07-10 01:27:35 [INFO] __main__: Embedding: BAAI/bge-small-zh-v1.5
+2026-07-10 01:27:35 [INFO] __main__: LLM: Qwen/Qwen2.5-7B-Instruct
+2026-07-10 01:27:35 [INFO] __main__: CUDA 不可用，使用 CPU
+2026-07-10 01:27:37 [INFO] numexpr.utils: Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-07-10 01:27:37 [INFO] numexpr.utils: NumExpr defaulting to 8 threads.
+2026-07-10 01:27:40 [INFO] datasets: PyTorch version 2.5.1 available.
+2026-07-10 01:27:42 [INFO] __main__: ==================================================
+2026-07-10 01:27:42 [INFO] __main__: 阶段 1/5: 加载文档
+2026-07-10 01:27:42 [INFO] __main__: ==================================================
+2026-07-10 01:27:42 [INFO] __main__: 语料文件不存在，使用内置示例数据 (sample_data)
+2026-07-10 01:27:42 [INFO] __main__: 
+==================================================
+2026-07-10 01:27:42 [INFO] __main__: 阶段 2/5: 文本切分
+2026-07-10 01:27:42 [INFO] __main__: ==================================================
+2026-07-10 01:27:42 [INFO] rag_project.data.splitter: TextSplitter 初始化完成: chunk_size=512, chunk_overlap=50, separators=['\n\n', '\n', '。', '！']...
+2026-07-10 01:27:42 [INFO] rag_project.data.splitter: 开始文本切分: 30 篇文档, 共 6765 字符
+2026-07-10 01:27:42 [INFO] rag_project.data.splitter: 文本切分完成: 30 篇文档 → 30 个文本块, 平均块长度: 226 字符, 涉及 30 个原始文档
+2026-07-10 01:27:42 [INFO] __main__: 切分统计: 总块数=30, 平均长度=226 字符, 最短=214, 最长=248
+2026-07-10 01:27:42 [INFO] __main__: 
+==================================================
+2026-07-10 01:27:42 [INFO] __main__: 阶段 3/5: 构建 Embedding & FAISS 索引
+2026-07-10 01:27:42 [INFO] __main__: ==================================================
+2026-07-10 01:27:42 [INFO] rag_project.embeddings.encoder: 正在加载 Embedding 模型: BAAI/bge-small-zh-v1.5
+2026-07-10 01:27:44 [INFO] sentence_transformers.base.model: Loading SentenceTransformer model from BAAI/bge-small-zh-v1.5.
+2026-07-10 01:27:49 [INFO] rag_project.embeddings.encoder: Embedding 模型加载完成: BAAI/bge-small-zh-v1.5
+  设备: cpu
+  归一化: True
+  批次大小: 32
+2026-07-10 01:27:49 [INFO] rag_project.embeddings.vector_store: FAISSVectorStore 初始化完成（索引尚未构建）
+2026-07-10 01:27:49 [INFO] __main__: 构建新的 FAISS 索引...
+2026-07-10 01:27:49 [INFO] rag_project.embeddings.vector_store: 开始构建 FAISS 索引: 30 个文档块
+2026-07-10 01:27:50 [INFO] faiss.loader: Loading faiss with AVX2 support.
+2026-07-10 01:27:50 [INFO] faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-07-10 01:27:50 [INFO] faiss.loader: Loading faiss.
+2026-07-10 01:27:50 [INFO] faiss.loader: Successfully loaded faiss.
+2026-07-10 01:27:50 [INFO] rag_project.embeddings.vector_store: FAISS 索引构建完成:
+  向量数量: 30
+  向量维度: 512
+  索引类型: IndexFlatIP (内积搜索)
+  搜索方式: 暴力搜索 (精确, O(N) 时间复杂度)
+2026-07-10 01:27:50 [INFO] __main__: 保存索引到: ./faiss_index
+2026-07-10 01:27:50 [INFO] rag_project.embeddings.vector_store: 保存 FAISS 索引到: D:\课件\大三下\自然语言处理\rag\faiss_index
+2026-07-10 01:27:50 [ERROR] __main__: RAG 系统构建失败: Error in __cdecl faiss::FileIOWriter::FileIOWriter(const char *) at D:\a\faiss\faiss\faiss\impl\io.cpp:104: Error: 'f' failed: could not open D:\课件\大三下\自然语言处理\rag\faiss_index\index.faiss for writing: No such file or directory
+2026-07-10 01:27:50 [ERROR] __main__: 详细错误信息:
+Traceback (most recent call last):
+  File "D:\课件\大三下\自然语言处理\rag\rag_project\scripts\run_rag.py", line 458, in main
+    pipeline, chunks = build_rag_system(retriever_type=args.retriever)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\课件\大三下\自然语言处理\rag\rag_project\scripts\run_rag.py", line 262, in build_rag_system
+    vector_store.save(index_path)
+  File "D:\课件\大三下\自然语言处理\rag\rag_project\embeddings\vector_store.py", line 208, in save
+    self.vector_store.save_local(abs_path)
+  File "D:\anaconda\Lib\site-packages\langchain_community\vectorstores\faiss.py", line 1160, in save_local
+    faiss.write_index(self.index, str(path / f"{index_name}.faiss"))
+  File "D:\anaconda\Lib\site-packages\faiss\swigfaiss.py", line 13440, in write_index
+    return _swigfaiss.write_index(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Error in __cdecl faiss::FileIOWriter::FileIOWriter(const char *) at D:\a\faiss\faiss\faiss\impl\io.cpp:104: Error: 'f' failed: could not open D:\课件\大三下\自然语言处理\rag\faiss_index\index.faiss for writing: No such file or directory

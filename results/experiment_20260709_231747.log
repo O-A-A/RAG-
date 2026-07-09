@@ -1,0 +1,31 @@
+23:17:49 [INFO] PyTorch 随机种子已设置: 42 (CPU)
+23:17:49 [INFO] =======================================================
+23:17:49 [INFO]   RAG 检索策略对比实验 — 开始运行
+23:17:49 [INFO]   时间: 2026-07-09 23:17:49
+23:17:49 [INFO]   模式: 仅检索 (--skip-llm)
+23:17:49 [INFO]   随机种子: 42
+23:17:49 [INFO] =======================================================
+23:17:49 [INFO] =======================================================
+23:17:49 [INFO] 阶段 1/5: 加载实验数据
+23:17:49 [INFO]   语料库: 30 篇文档
+23:17:49 [INFO]   测试集: 100 条 QA 对
+23:17:49 [INFO] CUDA 不可用，Embedding 将使用 CPU
+23:17:50 [INFO] Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+23:17:50 [INFO] NumExpr defaulting to 8 threads.
+23:17:53 [INFO] PyTorch version 2.5.1 available.
+23:17:55 [INFO] =======================================================
+23:17:55 [INFO] 阶段 2/5: 文本切分 & FAISS 索引构建
+23:17:55 [INFO] TextSplitter 初始化完成: chunk_size=512, chunk_overlap=50, separators=['\n\n', '\n', '。', '！']...
+23:17:55 [INFO] 开始文本切分: 30 篇文档, 共 10242 字符
+23:17:55 [INFO] 文本切分完成: 30 篇文档 → 30 个文本块, 平均块长度: 341 字符, 涉及 30 个原始文档
+23:17:55 [INFO]   切分完成: 30 篇 → 30 个块
+23:17:55 [INFO]   加载 BGE Embedding 模型...
+23:17:55 [INFO] 正在加载 Embedding 模型: BAAI/bge-small-zh-v1.5
+23:17:56 [INFO] Loading SentenceTransformer model from BAAI/bge-small-zh-v1.5.
+23:18:03 [INFO] Embedding 模型加载完成: BAAI/bge-small-zh-v1.5
+  设备: cpu
+  归一化: True
+  批次大小: 32
+23:18:03 [INFO]   构建 FAISS 索引...
+23:18:03 [INFO] FAISSVectorStore 初始化完成（索引尚未构建）
+23:18:03 [INFO] 开始构建 FAISS 索引: 30 个文档块
