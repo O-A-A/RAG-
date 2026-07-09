@@ -145,6 +145,9 @@ def print_banner():
     print(banner)
 
 
+_API_MODE = False
+
+
 def build_rag_system(retriever_type: str = "hybrid_rrf"):
     """
     构建完整的 RAG 系统。
@@ -291,10 +294,14 @@ def build_rag_system(retriever_type: str = "hybrid_rrf"):
     except ImportError:
         has_cuda = False
 
-    if has_cuda:
+    if _API_MODE:
+        from rag_project.llm.api_generator import APIGenerator
+        logger.info("使用 DeepSeek API")
+        generator = APIGenerator()
+    elif has_cuda:
         generator = LLMGenerator()
     else:
-        logger.warning("CUDA 不可用，跳过 LLM 加载。回答将来自检索结果拼接。")
+        logger.warning("CUDA 不可用，跳过 LLM 加载。使用 --api 可通过 DeepSeek API 调用 LLM。")
         generator = None
 
     pipeline = RAGPipeline(retriever, prompt_template, generator)
@@ -391,6 +398,11 @@ def main():
         """,
     )
     parser.add_argument(
+        "--api", "-a",
+        action="store_true",
+        help="使用 DeepSeek API (需设置 DEEPSEEK_API_KEY 环境变量)",
+    )
+    parser.add_argument(
         "--retriever", "-r",
         type=str,
         default="hybrid_rrf",
@@ -445,6 +457,10 @@ def main():
     except ImportError:
         cfg.embedding_device = "cpu"
         cfg.llm_device = "cpu"
+
+    # 设置 API 模式
+    global _API_MODE
+    _API_MODE = args.api
 
     # 构建 RAG 系统
     try:

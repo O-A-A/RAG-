@@ -1,0 +1,89 @@
+2026-07-10 02:46:08 [INFO] __main__: 配置: chunk_size=512, top_k=5
+2026-07-10 02:46:08 [INFO] __main__: Embedding: BAAI/bge-small-zh-v1.5
+2026-07-10 02:46:08 [INFO] __main__: LLM: Qwen/Qwen2.5-7B-Instruct
+2026-07-10 02:46:08 [INFO] __main__: CUDA 不可用，使用 CPU
+2026-07-10 02:46:09 [INFO] numexpr.utils: Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-07-10 02:46:09 [INFO] numexpr.utils: NumExpr defaulting to 8 threads.
+2026-07-10 02:46:12 [INFO] datasets: PyTorch version 2.5.1 available.
+2026-07-10 02:46:22 [INFO] __main__: ==================================================
+2026-07-10 02:46:22 [INFO] __main__: 阶段 1/5: 加载文档
+2026-07-10 02:46:22 [INFO] __main__: ==================================================
+2026-07-10 02:46:22 [INFO] __main__: 语料文件不存在，使用内置示例数据 (sample_data)
+2026-07-10 02:46:22 [INFO] __main__: 
+==================================================
+2026-07-10 02:46:22 [INFO] __main__: 阶段 2/5: 文本切分
+2026-07-10 02:46:22 [INFO] __main__: ==================================================
+2026-07-10 02:46:22 [INFO] rag_project.data.splitter: TextSplitter 初始化完成: chunk_size=512, chunk_overlap=50, separators=['\n\n', '\n', '。', '！']...
+2026-07-10 02:46:22 [INFO] rag_project.data.splitter: 开始文本切分: 30 篇文档, 共 6765 字符
+2026-07-10 02:46:22 [INFO] rag_project.data.splitter: 文本切分完成: 30 篇文档 → 30 个文本块, 平均块长度: 226 字符, 涉及 30 个原始文档
+2026-07-10 02:46:22 [INFO] __main__: 切分统计: 总块数=30, 平均长度=226 字符, 最短=214, 最长=248
+2026-07-10 02:46:22 [INFO] __main__: 
+==================================================
+2026-07-10 02:46:22 [INFO] __main__: 阶段 3/5: 构建 Embedding & FAISS 索引
+2026-07-10 02:46:22 [INFO] __main__: ==================================================
+2026-07-10 02:46:22 [INFO] rag_project.embeddings.encoder: 正在加载 Embedding 模型: BAAI/bge-small-zh-v1.5
+2026-07-10 02:46:25 [INFO] sentence_transformers.base.model: Loading SentenceTransformer model from BAAI/bge-small-zh-v1.5.
+2026-07-10 02:46:31 [INFO] rag_project.embeddings.encoder: Embedding 模型加载完成: BAAI/bge-small-zh-v1.5
+  设备: cpu
+  归一化: True
+  批次大小: 32
+2026-07-10 02:46:31 [INFO] rag_project.embeddings.vector_store: FAISSVectorStore 初始化完成（索引尚未构建）
+2026-07-10 02:46:31 [INFO] __main__: 构建新的 FAISS 索引...
+2026-07-10 02:46:31 [INFO] rag_project.embeddings.vector_store: 开始构建 FAISS 索引: 30 个文档块
+2026-07-10 02:46:33 [INFO] faiss.loader: Loading faiss with AVX2 support.
+2026-07-10 02:46:33 [INFO] faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-07-10 02:46:33 [INFO] faiss.loader: Loading faiss.
+2026-07-10 02:46:33 [INFO] faiss.loader: Successfully loaded faiss.
+2026-07-10 02:46:33 [INFO] rag_project.embeddings.vector_store: FAISS 索引构建完成:
+  向量数量: 30
+  向量维度: 512
+  索引类型: IndexFlatIP (内积搜索)
+  搜索方式: 暴力搜索 (精确, O(N) 时间复杂度)
+2026-07-10 02:46:33 [INFO] __main__: 
+==================================================
+2026-07-10 02:46:33 [INFO] __main__: 阶段 4/5: 初始化检索器
+2026-07-10 02:46:33 [INFO] __main__: ==================================================
+2026-07-10 02:46:33 [INFO] __main__: 检索器类型: hybrid_rrf
+2026-07-10 02:46:33 [INFO] rag_project.retrievers.bm25_retriever: BM25 分词中: 30 篇文档...
+2026-07-10 02:46:33 [DEBUG] jieba: Building prefix dict from the default dictionary ...
+2026-07-10 02:46:33 [DEBUG] jieba: Loading model from cache C:\Users\34490\AppData\Local\Temp\jieba.cache
+2026-07-10 02:46:35 [DEBUG] jieba: Loading model cost 2.071 seconds.
+2026-07-10 02:46:35 [DEBUG] jieba: Prefix dict has been built successfully.
+2026-07-10 02:46:35 [INFO] rag_project.retrievers.bm25_retriever: BM25Retriever 初始化完成: n_docs=30, avg_doc_len=120.2 tokens, top_k=5
+2026-07-10 02:46:35 [INFO] rag_project.retrievers.dense_retriever: DenseRetriever 初始化完成: n_vectors=30, top_k=5
+2026-07-10 02:46:35 [INFO] rag_project.retrievers.hybrid_retriever: HybridRetriever 初始化完成:
+  BM25: Retriever[bm25]
+  Dense: Retriever[dense_bge]
+  Fusion: rrf
+  top_k=5, candidate_multiplier=4
+2026-07-10 02:46:35 [INFO] __main__: 检索器初始化完成: Retriever[hybrid_rrf]
+2026-07-10 02:46:35 [INFO] __main__: 
+==================================================
+2026-07-10 02:46:35 [INFO] __main__: 阶段 5/5: 初始化 LLM & Pipeline
+2026-07-10 02:46:35 [INFO] __main__: ==================================================
+2026-07-10 02:46:35 [INFO] rag_project.llm.prompt: RAGPromptTemplate 初始化完成:
+  系统提示词长度: 113 字符
+  用户模板长度: 46 字符
+2026-07-10 02:46:35 [INFO] __main__: 使用 DeepSeek API
+2026-07-10 02:46:39 [INFO] langchain_openai.chat_models._client_utils: langchain-openai detected system proxy configuration and no explicit `http_socket_options` / `http_client` / `http_async_client` / `openai_proxy`; skipping the custom `httpx` transport so httpx's env-proxy auto-detection applies. Pass `http_socket_options=[...]` to opt back into kernel-level TCP keepalive tuning on top of the env proxy.
+2026-07-10 02:46:49 [INFO] rag_project.llm.api_generator: API Generator 就绪: deepseek-chat @ https://api.deepseek.com
+2026-07-10 02:46:49 [INFO] rag_project.src.pipeline: RAGPipeline 初始化完成:
+  Retriever: Retriever[hybrid_rrf]
+  Generator: <rag_project.llm.api_generator.APIGenerator object at 0x000002014F483AA0>
+  Top-k: 5
+2026-07-10 02:46:49 [INFO] __main__: RAG 系统构建完成！
+2026-07-10 02:46:57 [INFO] rag_project.src.pipeline: [RAG Pipeline] 开始处理: '你是谁...'
+2026-07-10 02:46:57 [INFO] rag_project.retrievers.hybrid_retriever: [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+2026-07-10 02:46:57 [INFO] rag_project.src.pipeline: [RAG Pipeline] 检索完成: 5 条结果, 耗时 31.6 ms
+2026-07-10 02:46:57 [INFO] rag_project.src.pipeline: [RAG Pipeline] Prompt 构建完成: 1469 字符
+2026-07-10 02:46:58 [INFO] httpx: HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-07-10 02:46:59 [INFO] rag_project.src.pipeline: [RAG Pipeline] 生成完成: 16 字符, 耗时 1674.5 ms
+2026-07-10 02:46:59 [INFO] rag_project.src.pipeline: [RAG Pipeline] 完成: 总耗时 1707.9 ms, 回答长度 16 字符
+2026-07-10 02:47:35 [INFO] rag_project.src.pipeline: [RAG Pipeline] 开始处理: '数字人民币的英文名是什么...'
+2026-07-10 02:47:35 [INFO] rag_project.retrievers.hybrid_retriever: [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+2026-07-10 02:47:35 [INFO] rag_project.src.pipeline: [RAG Pipeline] 检索完成: 5 条结果, 耗时 13.8 ms
+2026-07-10 02:47:35 [INFO] rag_project.src.pipeline: [RAG Pipeline] Prompt 构建完成: 1481 字符
+2026-07-10 02:47:35 [INFO] httpx: HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-07-10 02:47:36 [INFO] rag_project.src.pipeline: [RAG Pipeline] 生成完成: 24 字符, 耗时 1193.3 ms
+2026-07-10 02:47:36 [INFO] rag_project.src.pipeline: [RAG Pipeline] 完成: 总耗时 1208.5 ms, 回答长度 24 字符

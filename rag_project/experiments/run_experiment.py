@@ -104,8 +104,10 @@ class ExperimentRunner:
         self,
         skip_llm: bool = False,
         results_dir: str = "results",
+        api_mode: bool = False,
     ):
         self.skip_llm = skip_llm
+        self.api_mode = api_mode
         self.results_dir = os.path.abspath(results_dir)
         os.makedirs(self.results_dir, exist_ok=True)
         self.logger = logging.getLogger(__name__)
@@ -400,19 +402,26 @@ class ExperimentRunner:
 
         # ── 阶段 4: (可选) LLM ──
         if not self.skip_llm:
-            try:
-                import torch
-                if torch.cuda.is_available():
-                    self._init_llm()
-                else:
-                    self.logger.warning(
-                        "CUDA 不可用，自动切换为仅检索模式。"
-                        "如需生成指标 (EM/F1)，请在 GPU 环境下运行。"
-                    )
+            if self.api_mode:
+                from rag_project.llm.api_generator import APIGenerator
+                from rag_project.llm.prompt import RAGPromptTemplate
+                self.logger.info("使用 DeepSeek API")
+                self.prompt_template = RAGPromptTemplate()
+                self.generator = APIGenerator()
+            else:
+                try:
+                    import torch
+                    if torch.cuda.is_available():
+                        self._init_llm()
+                    else:
+                        self.logger.warning(
+                            "CUDA 不可用，自动切换为仅检索模式。"
+                            "使用 --api 可通过 DeepSeek API 调用 LLM。"
+                        )
+                        self.skip_llm = True
+                except ImportError:
+                    self.logger.warning("torch 未安装，自动切换为仅检索模式。")
                     self.skip_llm = True
-            except ImportError:
-                self.logger.warning("torch 未安装，自动切换为仅检索模式。")
-                self.skip_llm = True
         else:
             self.logger.info("阶段 4/5: 跳过 LLM (--skip-llm)")
 
@@ -599,6 +608,10 @@ def _parse_args():
         help="跳过 LLM，仅评估检索质量 (Recall@5 + MRR)。无需 GPU。"
     )
     parser.add_argument(
+        "--api", action="store_true",
+        help="使用 DeepSeek API (需设置 DEEPSEEK_API_KEY 环境变量)"
+    )
+    parser.add_argument(
         "--output", "-o", type=str, default="results",
         help="结果输出目录 (默认: results)"
     )
@@ -629,6 +642,7 @@ def main():
     runner = ExperimentRunner(
         skip_llm=args.skip_llm,
         results_dir=args.output,
+        api_mode=args.api,
     )
     runner.run()
 

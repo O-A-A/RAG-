@@ -1,0 +1,503 @@
+02:35:51 [INFO] PyTorch 随机种子已设置: 42 (CPU)
+02:35:51 [INFO] =======================================================
+02:35:51 [INFO]   RAG 检索策略对比实验 — 开始运行
+02:35:51 [INFO]   时间: 2026-07-10 02:35:51
+02:35:51 [INFO]   模式: 完整 RAG
+02:35:51 [INFO]   随机种子: 42
+02:35:51 [INFO] =======================================================
+02:35:51 [INFO] =======================================================
+02:35:51 [INFO] 阶段 1/5: 加载实验数据
+02:35:51 [INFO]   语料库: 30 篇文档
+02:35:51 [INFO]   测试集: 100 条 QA 对
+02:35:51 [INFO] CUDA 不可用，Embedding 将使用 CPU
+02:35:52 [INFO] Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+02:35:52 [INFO] NumExpr defaulting to 8 threads.
+02:35:55 [INFO] PyTorch version 2.5.1 available.
+02:35:57 [INFO] =======================================================
+02:35:57 [INFO] 阶段 2/5: 文本切分 & FAISS 索引构建
+02:35:57 [INFO] TextSplitter 初始化完成: chunk_size=512, chunk_overlap=50, separators=['\n\n', '\n', '。', '！']...
+02:35:57 [INFO] 开始文本切分: 30 篇文档, 共 6765 字符
+02:35:57 [INFO] 文本切分完成: 30 篇文档 → 30 个文本块, 平均块长度: 226 字符, 涉及 30 个原始文档
+02:35:57 [INFO]   切分完成: 30 篇 → 30 个块
+02:35:57 [INFO]   加载 BGE Embedding 模型...
+02:35:57 [INFO] 正在加载 Embedding 模型: BAAI/bge-small-zh-v1.5
+02:35:58 [INFO] Loading SentenceTransformer model from BAAI/bge-small-zh-v1.5.
+02:36:03 [INFO] Embedding 模型加载完成: BAAI/bge-small-zh-v1.5
+  设备: cpu
+  归一化: True
+  批次大小: 32
+02:36:03 [INFO]   构建 FAISS 索引...
+02:36:03 [INFO] FAISSVectorStore 初始化完成（索引尚未构建）
+02:36:03 [INFO] 开始构建 FAISS 索引: 30 个文档块
+02:36:04 [INFO] Loading faiss with AVX2 support.
+02:36:04 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+02:36:04 [INFO] Loading faiss.
+02:36:04 [INFO] Successfully loaded faiss.
+02:36:04 [INFO] FAISS 索引构建完成:
+  向量数量: 30
+  向量维度: 512
+  索引类型: IndexFlatIP (内积搜索)
+  搜索方式: 暴力搜索 (精确, O(N) 时间复杂度)
+02:36:04 [INFO]   FAISS 索引: 30 个向量
+02:36:04 [INFO] =======================================================
+02:36:04 [INFO] 阶段 3/5: 初始化三种 Retriever
+02:36:04 [INFO] BM25 分词中: 30 篇文档...
+02:36:04 [DEBUG] Building prefix dict from the default dictionary ...
+02:36:04 [DEBUG] Loading model from cache C:\Users\34490\AppData\Local\Temp\jieba.cache
+02:36:05 [DEBUG] Loading model cost 0.509 seconds.
+02:36:05 [DEBUG] Prefix dict has been built successfully.
+02:36:05 [INFO] BM25Retriever 初始化完成: n_docs=30, avg_doc_len=120.2 tokens, top_k=5
+02:36:05 [INFO]   [1/3] Retriever[bm25]
+02:36:05 [INFO] DenseRetriever 初始化完成: n_vectors=30, top_k=5
+02:36:05 [INFO]   [2/3] Retriever[dense_bge]
+02:36:05 [INFO] HybridRetriever 初始化完成:
+  BM25: Retriever[bm25]
+  Dense: Retriever[dense_bge]
+  Fusion: rrf
+  top_k=5, candidate_multiplier=4
+02:36:05 [INFO]   [3/3] Retriever[hybrid_rrf]
+02:36:05 [INFO] 使用 DeepSeek API
+02:36:05 [INFO] RAGPromptTemplate 初始化完成:
+  系统提示词长度: 113 字符
+  用户模板长度: 46 字符
+02:36:06 [INFO] langchain-openai detected system proxy configuration and no explicit `http_socket_options` / `http_client` / `http_async_client` / `openai_proxy`; skipping the custom `httpx` transport so httpx's env-proxy auto-detection applies. Pass `http_socket_options=[...]` to opt back into kernel-level TCP keepalive tuning on top of the env proxy.
+02:36:08 [INFO] API Generator 就绪: deepseek-chat @ https://api.deepseek.com
+02:36:08 [INFO] =======================================================
+02:36:08 [INFO] 阶段 5/5: 运行三组对比实验
+02:36:08 [INFO]   每组 100 个问题
+02:36:08 [INFO] 
+──────────────────────────────────────────────────
+02:36:08 [INFO]   运行实验组: bm25
+02:36:08 [INFO] ──────────────────────────────────────────────────
+02:36:08 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:09 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:10 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:12 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:13 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:14 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:15 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:16 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:18 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:18 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:20 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:20 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:22 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:22 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:23 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:24 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:25 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:26 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:27 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:28 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:29 [INFO]     [ 20/100] Recall@5=1.0000  MRR=0.9750
+02:36:29 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:30 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:33 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:34 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:36 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:37 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:38 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:40 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:41 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:42 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:43 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:44 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:46 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:47 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:48 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:49 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:51 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:52 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:53 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:55 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:55 [INFO]     [ 40/100] Recall@5=1.0000  MRR=1.0000
+02:36:56 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:57 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:58 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:36:59 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:01 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:03 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:03 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:05 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:07 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:07 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:08 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:09 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:10 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:12 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:13 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:14 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:16 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:17 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:18 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:19 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:20 [INFO]     [ 60/100] Recall@5=1.0000  MRR=0.9417
+02:37:20 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:22 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:23 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:25 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:26 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:26 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:28 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:30 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:31 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:32 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:33 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:34 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:36 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:37 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:38 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:39 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:40 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:41 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:42 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:44 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:45 [INFO]     [ 80/100] Recall@5=1.0000  MRR=1.0000
+02:37:45 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:46 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:47 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:48 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:50 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:51 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:52 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:53 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:54 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:55 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:57 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:37:59 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:01 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:02 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:04 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:06 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:08 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:12 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:13 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:15 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:18 [INFO]     [100/100] Recall@5=0.7667  MRR=0.7975
+02:38:18 [INFO] 
+──────────────────────────────────────────────────
+02:38:18 [INFO]   运行实验组: dense_bge
+02:38:18 [INFO] ──────────────────────────────────────────────────
+02:38:18 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:20 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:21 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:23 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:24 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:26 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:28 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:29 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:30 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:31 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:32 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:33 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:34 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:36 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:37 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:38 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:39 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:41 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:42 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:43 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:45 [INFO]     [ 20/100] Recall@5=1.0000  MRR=1.0000
+02:38:45 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:46 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:47 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:49 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:50 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:51 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:53 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:54 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:55 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:56 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:58 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:38:59 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:01 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:02 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:03 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:04 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:05 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:07 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:08 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:09 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:10 [INFO]     [ 40/100] Recall@5=1.0000  MRR=0.9667
+02:39:11 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:12 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:13 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:15 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:16 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:17 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:19 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:20 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:21 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:22 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:23 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:25 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:26 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:28 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:29 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:30 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:31 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:32 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:34 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:35 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:36 [INFO]     [ 60/100] Recall@5=1.0000  MRR=0.9750
+02:39:36 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:37 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:38 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:40 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:41 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:43 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:44 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:46 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:47 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:48 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:49 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:50 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:51 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:52 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:54 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:55 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:56 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:57 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:39:59 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:01 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:02 [INFO]     [ 80/100] Recall@5=1.0000  MRR=1.0000
+02:40:02 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:04 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:08 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:09 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:10 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:11 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:13 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:14 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:16 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:17 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:18 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:21 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:22 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:23 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:25 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:28 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:30 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:32 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:35 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:37 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:39 [INFO]     [100/100] Recall@5=0.8250  MRR=0.8500
+02:40:39 [INFO] 
+──────────────────────────────────────────────────
+02:40:39 [INFO]   运行实验组: hybrid_rrf
+02:40:39 [INFO] ──────────────────────────────────────────────────
+02:40:39 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:40:40 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:40 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:40:40 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:41 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:40:41 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:42 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:40:42 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:43 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=27
+02:40:43 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:44 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:40:44 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:45 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=23
+02:40:45 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:46 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:40:46 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:47 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:40:47 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:49 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:40:49 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:50 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:40:50 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:51 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:40:51 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:52 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:40:52 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:54 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=22
+02:40:54 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:55 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=28
+02:40:55 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:56 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=28
+02:40:56 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:57 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:40:57 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:58 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:40:58 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:40:59 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:40:59 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:01 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:01 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:02 [INFO]     [ 20/100] Recall@5=1.0000  MRR=1.0000
+02:41:02 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:41:02 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:03 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=27
+02:41:03 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:04 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:04 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:05 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:05 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:06 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:41:06 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:08 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=28
+02:41:08 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:09 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:41:09 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:10 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=27
+02:41:10 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:11 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:41:11 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:12 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:41:12 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:13 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:14 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:15 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:41:15 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:16 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=23
+02:41:16 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:17 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:41:17 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:18 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=23
+02:41:18 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:19 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=22
+02:41:19 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:20 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:20 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:21 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:41:21 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:23 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:23 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:24 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:41:24 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:25 [INFO]     [ 40/100] Recall@5=1.0000  MRR=1.0000
+02:41:25 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=28
+02:41:25 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:26 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:26 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:27 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:27 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:28 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:28 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:29 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:41:29 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:30 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:41:30 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:31 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=28
+02:41:31 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:32 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:32 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:33 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=27
+02:41:33 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:34 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=27
+02:41:34 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:35 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:35 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:36 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:36 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:38 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:38 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:39 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=22
+02:41:39 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:40 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:41:40 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:41 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=27
+02:41:41 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:42 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:42 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:43 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:43 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:45 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=28
+02:41:45 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:45 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:45 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:46 [INFO]     [ 60/100] Recall@5=1.0000  MRR=0.9750
+02:41:46 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=28
+02:41:47 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:48 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=23
+02:41:48 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:49 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:41:49 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:51 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:51 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:52 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=28
+02:41:52 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:54 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:41:54 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:54 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:55 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:56 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=23
+02:41:56 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:57 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:41:57 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:58 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:41:59 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:41:59 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:41:59 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:01 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=27
+02:42:01 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:02 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=27
+02:42:02 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:03 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:42:03 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:04 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:42:04 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:06 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:42:06 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:07 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:42:07 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:08 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:42:09 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:10 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:42:10 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:11 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:42:11 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:12 [INFO]     [ 80/100] Recall@5=1.0000  MRR=1.0000
+02:42:12 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=27
+02:42:12 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:13 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:42:13 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:14 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:42:14 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:15 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:42:16 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:17 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:42:17 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:18 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:42:18 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:18 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:42:19 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:19 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:42:20 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:21 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:42:21 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:22 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:42:22 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:23 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:42:23 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:25 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=26
+02:42:25 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:26 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=22
+02:42:26 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:27 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=25
+02:42:28 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:29 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:42:29 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:32 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=27
+02:42:32 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:34 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=22
+02:42:34 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:36 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=23
+02:42:36 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:38 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=24
+02:42:38 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:40 [INFO] [Hybrid RRF] 融合完成: BM25=20, Dense=20, 并集=23
+02:42:40 [INFO] HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+02:42:42 [INFO]     [100/100] Recall@5=0.8000  MRR=0.8142
+02:42:42 [INFO] 
+=======================================================
+02:42:42 [INFO] 导出实验结果
+02:42:42 [INFO]   [OK] experiment_result.csv (300 行)
+02:42:42 [INFO]   [OK] summary.csv (3 行)
+02:42:42 [INFO] 
+实验完成! 总耗时: 411.3 秒 (6.9 分钟)
+02:42:42 [INFO] 结果目录: D:\课件\大三下\自然语言处理\rag\results

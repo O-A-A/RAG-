@@ -50,15 +50,17 @@ matplotlib.rcParams.update({
 
 # ── 配色方案 (色盲友好, 学术风格) ─────────────────────────────────────
 COLORS: Dict[str, str] = {
-    "bm25":       "#4472C4",   # 深蓝
-    "dense_bge":  "#ED7D31",   # 橙色
-    "hybrid_a50": "#70AD47",   # 绿色
+    "bm25":       "#4472C4",
+    "dense_bge":  "#ED7D31",
+    "hybrid_a50": "#70AD47",
+    "hybrid_rrf": "#70AD47",
 }
 
 RETRIEVER_LABELS: Dict[str, str] = {
     "bm25":       "BM25",
     "dense_bge":  "Dense (BGE)",
-    "hybrid_a50": "Hybrid",
+    "hybrid_a50": "Hybrid (Linear, α=0.5)",
+    "hybrid_rrf": "Hybrid (RRF)",
 }
 
 METRIC_LABELS: Dict[str, str] = {
